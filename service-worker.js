@@ -1,5 +1,5 @@
-const CACHE_NAME = 'color-studio-shell-v2';
-const APP_SHELL = ['./', './index.html', './manifest.json', './icon.svg', './ipad-layout.css'];
+const CACHE_NAME = 'color-studio-shell-v3';
+const APP_SHELL = ['./', './index.html', './manifest.json', './icon.svg', './ipad-layout.css?v=3'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
@@ -22,7 +22,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(fetch(request).then(async (response) => {
       if (!response.ok) return response;
       const html = await response.text();
-      const patched = html.replace('</head>', '<link rel="stylesheet" href="./ipad-layout.css?v=2"></head>');
+      const patched = html.replace('</head>', '<link rel="stylesheet" href="./ipad-layout.css?v=3"></head>');
       const headers = new Headers(response.headers);
       headers.delete('content-length');
       const page = new Response(patched, { status: response.status, statusText: response.statusText, headers });
