@@ -1,12 +1,13 @@
-/* iPad studio layout correction: keep the toolbars visible and fit the canvas between them. */
-html, body { width:100%; min-height:100%; overflow:hidden; }
-body { min-height:100vh; min-height:100dvh; }
+/* iPad studio layout correction: fixed app viewport with reserved toolbar and palette space. */
+html { min-height:100%; }
+body { min-height:100vh; min-height:100dvh; overflow-x:hidden; }
 #studio-view {
- height:100vh !important; height:100dvh !important;
+ position:fixed !important; inset:0 !important; z-index:30;
+ width:100%; height:100vh !important; height:100dvh !important;
  max-height:100vh !important; max-height:100dvh !important;
- min-height:0 !important; flex:0 0 100vh !important;
- flex-basis:100dvh !important; overflow:hidden !important;
+ min-height:0 !important; overflow:hidden !important;
  padding-top:env(safe-area-inset-top,0px);
+ padding-bottom:env(safe-area-inset-bottom,0px);
 }
 #studio-view > header {
  position:relative; flex:0 0 auto !important; min-height:58px;
@@ -14,7 +15,8 @@ body { min-height:100vh; min-height:100dvh; }
  padding-left:max(12px,env(safe-area-inset-left,0px));
  padding-right:max(12px,env(safe-area-inset-right,0px));
 }
-#studio-view > header > div:last-child { flex-wrap:nowrap; gap:4px; }
+#studio-view > header > div:first-child { flex:1 1 auto; min-width:0; }
+#studio-view > header > div:last-child { flex:0 0 auto; flex-wrap:nowrap; gap:4px; }
 #studio-view > main {
  flex:1 1 0% !important; min-height:0 !important; height:0;
  padding:8px !important; overflow:hidden;
@@ -33,10 +35,16 @@ body { min-height:100vh; min-height:100dvh; }
  -webkit-overflow-scrolling:touch; scrollbar-width:thin;
 }
 #palette-container > * { flex:0 0 auto; }
-@media (max-width:700px) {
+@media (max-width:850px) {
  #studio-view > header { gap:5px; padding-top:6px; padding-bottom:6px; }
  #studio-view > header > div:first-child { gap:6px; }
  #studio-view > header > div:last-child { gap:3px; }
- #studio-view > header button { padding-left:8px; padding-right:8px; }
+ #studio-view > header button { padding-left:7px; padding-right:7px; }
+ #studio-view > header button svg { width:14px; height:14px; }
  #studio-view > main { padding:5px !important; }
+}
+@media (max-width:560px) {
+ #studio-view > header { align-items:center; }
+ #studio-view > header > div:first-child > div:last-child { display:none; }
+ #studio-view > header > div:last-child button { padding:7px; }
 }
